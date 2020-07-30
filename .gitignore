@@ -1,0 +1,12 @@
+**/.DS_Store
+*/input/*
+*/temp/*
+*/output/*
+
+*.png
+
+!output/*
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
