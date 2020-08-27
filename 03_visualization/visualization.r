@@ -5,10 +5,10 @@ rm(list = ls())
 source("../project_support.r")
 
 # Load data
-data <- read_csv("./input/b_f_con_data_50.csv")
-id_dictionary <- read_csv("./input/b_f_con_ID_dict_50.csv")
+data <- read_csv("./input/b_f_con_data_50_50.csv")
+id_dictionary <- read_csv("./input/b_f_con_ID_dict_50_50.csv")
 raw_data <- read_csv("./input/drh.csv")
-phylogeny <- read.nexus(file = "./input/b_f_con_50_mcct.trees")
+phylogeny <- read.nexus(file = "./input/b_f_con_50_50_mcct.trees")
 
 # Combine dictionary with metadata
 dictionary <- id_metadata_dictionary(id_dictionary, raw_data, phylogeny)

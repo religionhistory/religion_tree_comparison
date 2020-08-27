@@ -53,11 +53,11 @@ replace_unknown_na <- function(data){
 }
 
 # Filter data 
-filter_data <- function(data, filter) {
-  # Remove questions with >filter% missing values 
-  data <- data[, -which(colMeans(is.na(data)) > filter)]
-  # Remove entries with <filter% of remaining questions answered
-  data <- data[-which(rowMeans(is.na(data)) > filter),] 
+filter_data <- function(data, var_filter, entry_filter) {
+  entry_filt <- rowMeans(is.na(data)) < entry_filter
+  question_filt <- colMeans(is.na(data)) < var_filter
+  # Remove questions and entries with >filter% missing values 
+  data <- data[entry_filt, question_filt]
   # Recombine entries where the different branching question answers (Elite, Non-elite and religious specialist) have the same answers for all questions
   data <- group_combine(data)
 }
@@ -316,7 +316,7 @@ glrm_impute <- function(data, k_idx){
 }
 
 # Find optimal value of k for glrm 
-glrm_k_idx <- function(raw_data, analysis, granularity, filtering, seed) {
+glrm_k_idx <- function(raw_data, analysis, granularity, var_filter, entry_filter, seed) {
   if(granularity == "c") {
     parent_var <- colnames(raw_data)[colnames(raw_data) %in% parent_quest$`Question ID`]
     raw_data <- raw_data %>% select(`Entry ID`, `Branching question`, all_of(parent_var))
@@ -325,8 +325,8 @@ glrm_k_idx <- function(raw_data, analysis, granularity, filtering, seed) {
   }
   # Replace Field doesn't know and I don't know (and Yes or No for analyis a) answers with NA for filtering missing values
   data <- replace_unknown_na(raw_data)
-  # Filter data to remove questions with >x% missing values 
-  filtered_data <- filter_data(data, filtering)
+  # Filter data to remove questions with >x% missing variables and >y% missing entries
+  filtered_data <- filter_data(data, var_filter, entry_filter)
   
   if(analysis == "b") {
     # Find groups of people from the same entry with >10% difference between them and recombine taxa
@@ -344,7 +344,8 @@ glrm_k_idx <- function(raw_data, analysis, granularity, filtering, seed) {
   # Add an additional 10% missing values
   data_extra_missing <- add_10_NA(data_no_id, seed)
   # Convert filtering to percentage
-  filt_per <- filtering * 100
+  var_filt_per <- var_filter * 100
+  entry_filt_per <- entry_filter * 100
   glrm_data <- as.h2o(data_extra_missing)
   glrm.list <- list()
   for (i in 1:(ceiling(ncol(data_extra_missing)/2))){
@@ -401,11 +402,11 @@ glrm_k_idx <- function(raw_data, analysis, granularity, filtering, seed) {
   output <- rbind(paste("Optimal value k =", k_idx, "\n\n", colnames(predict.df)), predict.df) 
   colnames(output) <- ""
   # Save output
-  write.table(output, file = paste0("./k_value/", analysis, "_", granularity, "_", filt_per, "_k_value", ".txt"), quote = FALSE, row.names = FALSE)
+  write.table(output, file = paste0("./k_value/", analysis, "_", granularity, "_", var_filt_per, "_", entry_filt_per, "_k_value", ".txt"), quote = FALSE, row.names = FALSE)
 }
 
 # Make nexus files with corresponding dictionaries and data
-make_nexus_dict <- function(raw_data, analysis, granularity, filtering, k){
+make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_filter, k){
   if(granularity == "c") {
     parent_var <- colnames(raw_data)[colnames(raw_data) %in% parent_quest$`Question ID`]
     raw_data <- raw_data %>% select(`Entry ID`, `Branching question`, all_of(parent_var))
@@ -415,14 +416,15 @@ make_nexus_dict <- function(raw_data, analysis, granularity, filtering, k){
   # Replace Field doesn't know and I don't know (and Yes or No for analyis a) answers with NA for filtering missing values
   data <- replace_unknown_na(raw_data)
   # Filter data to remove questions with >x% missing values 
-  filtered_data <- filter_data(data, filtering)
+  filtered_data <- filter_data(data, var_filter, entry_filter)
   if(analysis == "b") {
     # Find groups of people from the same entry with >10% difference between them and recombine taxa
     # recombine entries where the different branching question answers (Elite, Non-elite and religious specialist) have the same answers for all questions
     filtered_data <- diff_group_comb(filtered_data)
   }
   # Convert filtering to percentage
-  filt_per <- filtering * 100
+  var_filt_per <- var_filter * 100
+  entry_filt_per <- entry_filter * 100
   
   #### Conservative analysis
   # Include yes, no and yes|no answers
@@ -433,11 +435,10 @@ make_nexus_dict <- function(raw_data, analysis, granularity, filtering, k){
   # Format data for creation of nexus file
   data_nexus <- nexus_formatting(data_ID)
   # Save data
-  write_csv(data_ID, paste0("./output/", analysis, "_", granularity, "_con_data_", filt_per, ".csv"))
-  write_csv(dictionary, paste0("./output/", analysis, "_", granularity, "_con_ID_dict_", filt_per, ".csv"))
+  write_csv(data_ID, paste0("./output/", analysis, "_", granularity, "_con_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+  write_csv(dictionary, paste0("./output/", analysis, "_", granularity, "_con_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
   # Write nexus data
-  write_morph_nexus(data_nexus, file = paste0("./output/", analysis, "_", granularity, "_con_", filt_per, ".nex"), missing = "?")
-  
+  write_morph_nexus(data_nexus, file = paste0("./output/", analysis, "_", granularity, "_con_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")  
   #### GLRM	
   # For robustness tests 1-4 impute missing values using glrm 	
   # Select entry ID and branching question	
@@ -478,10 +479,10 @@ make_nexus_dict <- function(raw_data, analysis, granularity, filtering, k){
   # Format data for creation of nexus file
   r_1_data_nexus <- nexus_formatting(r_1_data_ID)
   # Save data
-  write_csv(r_1_data_ID, paste0("./output/", analysis, "_", granularity, "_r1_data_", filt_per, ".csv"))
-  write_csv(r_1_dictionary, paste0("./output/", analysis, "_", granularity, "_r1_ID_dict_", filt_per, ".csv"))
+  write_csv(r_1_data_ID, paste0("./output/", analysis, "_", granularity, "_r1_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+  write_csv(r_1_dictionary, paste0("./output/", analysis, "_", granularity, "_r1_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
   # Write nexus data
-  write_morph_nexus(r_1_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r1_", filt_per, ".nex"), missing = "?")
+  write_morph_nexus(r_1_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r1_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
   
   #### Robustness test 2
   # Impute I don't know answers with glrm
@@ -508,10 +509,10 @@ make_nexus_dict <- function(raw_data, analysis, granularity, filtering, k){
   # Format data for creation of nexus file
   r_2_data_nexus <- nexus_formatting(r_2_data_ID)
   # Save data
-  write_csv(r_2_data_ID, paste0("./output/", analysis, "_", granularity, "_r2_data_", filt_per, ".csv"))
-  write_csv(r_2_dictionary, paste0("./output/", analysis, "_", granularity, "_r2_ID_dict_", filt_per, ".csv"))
+  write_csv(r_2_data_ID, paste0("./output/", analysis, "_", granularity, "_r2_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+  write_csv(r_2_dictionary, paste0("./output/", analysis, "_", granularity, "_r2_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
   # Write nexus data
-  write_morph_nexus(r_2_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r2_", filt_per, ".nex"), missing = "?")
+  write_morph_nexus(r_2_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r2_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
   
   #### Robustness test 3
   # Impute Field doesn't know and I don't know answers with glrm
@@ -538,10 +539,10 @@ make_nexus_dict <- function(raw_data, analysis, granularity, filtering, k){
   # Format data for creation of nexus file
   r_3_data_nexus <- nexus_formatting(r_3_data_ID)
   # Save data
-  write_csv(r_3_data_ID, paste0("./output/", analysis, "_", granularity, "_r3_data_", filt_per, ".csv"))
-  write_csv(r_3_dictionary, paste0("./output/", analysis, "_", granularity, "_r3_ID_dict_", filt_per, ".csv"))
+  write_csv(r_3_data_ID, paste0("./output/", analysis, "_", granularity, "_r3_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+  write_csv(r_3_dictionary, paste0("./output/", analysis, "_", granularity, "_r3_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
   # Write nexus data
-  write_morph_nexus(r_3_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r3_", filt_per, ".nex"), missing = "?")
+  write_morph_nexus(r_3_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r3_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
   
   #### Robustness test 4 
   # Impute all missing values with glrm
@@ -568,10 +569,10 @@ make_nexus_dict <- function(raw_data, analysis, granularity, filtering, k){
   # Format data for creation of nexus file
   r_4_data_nexus <- nexus_formatting(r_4_data_ID)
   # Save data
-  write_csv(r_4_data_ID, paste0("./output/", analysis, "_", granularity, "_r4_data_", filt_per, ".csv"))
-  write_csv(r_4_dictionary, paste0("./output/", analysis, "_", granularity, "_r4_ID_dict_", filt_per, ".csv"))
+  write_csv(r_4_data_ID, paste0("./output/", analysis, "_", granularity, "_r4_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+  write_csv(r_4_dictionary, paste0("./output/", analysis, "_", granularity, "_r4_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
   # Write nexus data
-  write_morph_nexus(r_4_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r4_", filt_per, ".nex"), missing = "?")
+  write_morph_nexus(r_4_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r4_", var_filt_per, "_", entry_filt_per,".nex"), missing = "?")
 }
 
 # Create dictionary of IDs and metadata

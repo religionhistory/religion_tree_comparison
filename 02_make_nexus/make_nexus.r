@@ -21,14 +21,14 @@ make.dir("./output")
 h2o.init(nthreads = -1)
 
 # Make nexus files with corresponding dictionaries and data
-make_nexus_dict(raw_data, analysis = "a", granularity = "c", filtering = 0.5, k = 19)
-make_nexus_dict(raw_data, analysis = "a", granularity = "c", filtering = 0.25, k = 4)
-make_nexus_dict(raw_data, analysis = "a", granularity = "f", filtering = 0.5, k = 6)
-make_nexus_dict(raw_data, analysis = "a", granularity = "f", filtering = 0.25, k = 5)
-make_nexus_dict(raw_data, analysis = "b", granularity = "c", filtering = 0.5, k = 5)
-make_nexus_dict(raw_data, analysis = "b", granularity = "c", filtering = 0.25, k = 2)
-make_nexus_dict(raw_data, analysis = "b", granularity = "f", filtering = 0.5, k = 45)
-make_nexus_dict(raw_data, analysis = "b", granularity = "f", filtering = 0.25, k = 5)
+make_nexus_dict(raw_data, analysis = "a", granularity = "c", var_filter = 0.5, entry_filter = 0.5, k = 19)
+make_nexus_dict(raw_data, analysis = "a", granularity = "c", var_filter = 0.35, entry_filter = 0.3, k = 4)
+make_nexus_dict(raw_data, analysis = "a", granularity = "f", var_filter = 0.5, entry_filter = 0.5, k = 6)
+make_nexus_dict(raw_data, analysis = "a", granularity = "f", var_filter = 0.35, entry_filter = 0.3, k = 5)
+make_nexus_dict(raw_data, analysis = "b", granularity = "c", var_filter = 0.5, entry_filter = 0.5, k = 5)
+make_nexus_dict(raw_data, analysis = "b", granularity = "c", var_filter = 0.35, entry_filter = 0.3, k = 2)
+make_nexus_dict(raw_data, analysis = "b", granularity = "f", var_filter = 0.5, entry_filter = 0.5, k = 45)
+make_nexus_dict(raw_data, analysis = "b", granularity = "f", var_filter = 0.35, entry_filter = 0.3, k = 5)
 
 # Shutdown H2O    
 h2o.shutdown(prompt=FALSE)

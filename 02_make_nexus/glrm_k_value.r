@@ -18,14 +18,14 @@ make.dir("./k_value")
 h2o.init(nthreads = -1)
 
 # Find optimal value of k for glrm 
-glrm_k_idx(raw_data, analysis = "a", granularity = "c", filtering = 0.5, seed = 123)
-glrm_k_idx(raw_data, analysis = "a", granularity = "c", filtering = 0.25, seed = 123)
-glrm_k_idx(raw_data, analysis = "a", granularity = "f", filtering = 0.5, seed = 123)
-glrm_k_idx(raw_data, analysis = "a", granularity = "f", filtering = 0.25, seed = 123)
-glrm_k_idx(raw_data, analysis = "b", granularity = "c", filtering = 0.5, seed = 123)
-glrm_k_idx(raw_data, analysis = "b", granularity = "c", filtering = 0.25, seed = 123)
-glrm_k_idx(raw_data, analysis = "b", granularity = "f", filtering = 0.5, seed = 123)
-glrm_k_idx(raw_data, analysis = "b", granularity = "f", filtering = 0.25, seed = 123)
+glrm_k_idx(raw_data, analysis = "a", granularity = "c", var_filter = 0.5, entry_filter = 0.5, seed = 123)
+glrm_k_idx(raw_data, analysis = "a", granularity = "c", var_filter = 0.35, entry_filter = 0.3, seed = 123)
+glrm_k_idx(raw_data, analysis = "a", granularity = "f", var_filter = 0.5, entry_filter = 0.5, seed = 123)
+glrm_k_idx(raw_data, analysis = "a", granularity = "f", var_filter = 0.35, entry_filter = 0.3, seed = 123)
+glrm_k_idx(raw_data, analysis = "b", granularity = "c", var_filter = 0.5, entry_filter = 0.5, seed = 123)
+glrm_k_idx(raw_data, analysis = "b", granularity = "c", var_filter = 0.35, entry_filter = 0.3, seed = 123)
+glrm_k_idx(raw_data, analysis = "b", granularity = "f", var_filter = 0.5, entry_filter = 0.5, seed = 123)
+glrm_k_idx(raw_data, analysis = "b", granularity = "f", var_filter = 0.35, entry_filter = 0.3, seed = 123)
 
 # Shutdown H2O    
 h2o.shutdown(prompt=FALSE)
