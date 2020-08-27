@@ -438,7 +438,8 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
   write_csv(data_ID, paste0("./output/", analysis, "_", granularity, "_con_data_", var_filt_per, "_", entry_filt_per, ".csv"))
   write_csv(dictionary, paste0("./output/", analysis, "_", granularity, "_con_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
   # Write nexus data
-  write_morph_nexus(data_nexus, file = paste0("./output/", analysis, "_", granularity, "_con_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")  
+  write_morph_nexus(data_nexus, file = paste0("./output/", analysis, "_", granularity, "_con_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
+  
   #### GLRM	
   # For robustness tests 1-4 impute missing values using glrm 	
   # Select entry ID and branching question	
@@ -447,7 +448,7 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
   data_no_id <- filtered_data %>% select(-`Entry ID`, -`Branching question`)
   # Remove Yes or No answers for glrm
   data_no_id[data_no_id == "{01}"] <- "3"
-
+  
   # GLRM
   data_imputed <- glrm_impute(data_no_id, k)
   # Recombine data with entry names and branching questions
@@ -460,96 +461,105 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
   r_test_1_data <- robustness_test_format(raw_data, filtered_data, data_ID, robustness_test = "1")
   # Index field doesn't know values
   fdk_idx <- as.data.frame(which(r_test_1_data == -1, arr.ind=TRUE)) 
-  # Extract the imputed values of field doesn't know answers
-  fdk_imp <- list()
-  for(i in 1:nrow(fdk_idx)) {
-    fdk_imp[[i]] <- data_imputed_id[fdk_idx$row[i], fdk_idx$col[i]]
-  }
-  fdk_imp <- as.numeric(unlist(fdk_imp))
-  # Replace field doesn't know answers with imputed values
-  r_test_1_data <- as.matrix(r_test_1_data)
-  for(i in 1:nrow(fdk_idx)) {
-    r_test_1_data[fdk_idx$row[i], fdk_idx$col[i]] <- fdk_imp[i]
-  }
-  r_test_1_data <- as.data.frame(r_test_1_data)
-  # Create ID for each entry and group of people 
-  r_1_data_ID <- data_id(r_test_1_data)
-  # Create dictionary of IDs, entry names and branching questions
-  r_1_dictionary <- id_dictionary(r_test_1_data)
-  # Format data for creation of nexus file
-  r_1_data_nexus <- nexus_formatting(r_1_data_ID)
-  # Save data
-  write_csv(r_1_data_ID, paste0("./output/", analysis, "_", granularity, "_r1_data_", var_filt_per, "_", entry_filt_per, ".csv"))
-  write_csv(r_1_dictionary, paste0("./output/", analysis, "_", granularity, "_r1_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
-  # Write nexus data
-  write_morph_nexus(r_1_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r1_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
-  
+  # If there are field doesn't know values answers perform robustness test
+  if(nrow(fdk_idx) > 0) {
+    # Extract the imputed values of field doesn't know answers
+    fdk_imp <- list()
+    for(i in 1:nrow(fdk_idx)) {
+      fdk_imp[[i]] <- data_imputed_id[fdk_idx$row[i], fdk_idx$col[i]]
+    }
+    fdk_imp <- as.numeric(unlist(fdk_imp))
+    # Replace field doesn't know answers with imputed values
+    r_test_1_data <- as.matrix(r_test_1_data)
+    for(i in 1:nrow(fdk_idx)) {
+      r_test_1_data[fdk_idx$row[i], fdk_idx$col[i]] <- fdk_imp[i]
+    }
+    r_test_1_data <- as.data.frame(r_test_1_data)
+    # Create ID for each entry and group of people 
+    r_1_data_ID <- data_id(r_test_1_data)
+    # Create dictionary of IDs, entry names and branching questions
+    r_1_dictionary <- id_dictionary(r_test_1_data)
+    # Format data for creation of nexus file
+    r_1_data_nexus <- nexus_formatting(r_1_data_ID)
+    # Save data
+    write_csv(r_1_data_ID, paste0("./output/", analysis, "_", granularity, "_r1_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+    write_csv(r_1_dictionary, paste0("./output/", analysis, "_", granularity, "_r1_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
+    # Write nexus data
+    write_morph_nexus(r_1_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r1_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
+  }  
   #### Robustness test 2
   # Impute I don't know answers with glrm
   # Format data for robustness test 2
   r_test_2_data <- robustness_test_format(raw_data, filtered_data, data_ID, robustness_test = "2")
   # Index I don't know values
   idk_idx <- as.data.frame(which(r_test_2_data == -2, arr.ind=TRUE)) 
-  # Extract the imputed values of I don't know answers
-  idk_imp <- list()
-  for(i in 1:nrow(idk_idx)) {
-    idk_imp[[i]] <- data_imputed_id[idk_idx$row[i], idk_idx$col[i]]
-  }
-  idk_imp <- as.numeric(unlist(idk_imp))
-  # Replace I don't know answers with imputed values
-  r_test_2_data <- as.matrix(r_test_2_data)
-  for(i in 1:nrow(idk_idx)) {
-    r_test_2_data[idk_idx$row[i], idk_idx$col[i]] <- idk_imp[i]
-  }
-  r_test_2_data <- as.data.frame(r_test_2_data)
-  # Create ID for each entry and group of people 
-  r_2_data_ID <- data_id(r_test_2_data)
-  # Create dictionary of IDs, entry names and branching questions
-  r_2_dictionary <- id_dictionary(r_test_2_data)
-  # Format data for creation of nexus file
-  r_2_data_nexus <- nexus_formatting(r_2_data_ID)
-  # Save data
-  write_csv(r_2_data_ID, paste0("./output/", analysis, "_", granularity, "_r2_data_", var_filt_per, "_", entry_filt_per, ".csv"))
-  write_csv(r_2_dictionary, paste0("./output/", analysis, "_", granularity, "_r2_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
-  # Write nexus data
-  write_morph_nexus(r_2_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r2_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
-  
+  # If there are I don't know answers perform robustness test
+  if(nrow(idk_idx) > 0) {
+    # Extract the imputed values of I don't know answers
+    idk_imp <- list()
+    for(i in 1:nrow(idk_idx)) {
+      idk_imp[[i]] <- data_imputed_id[idk_idx$row[i], idk_idx$col[i]]
+    }
+    idk_imp <- as.numeric(unlist(idk_imp))
+    # Replace I don't know answers with imputed values
+    r_test_2_data <- as.matrix(r_test_2_data)
+    for(i in 1:nrow(idk_idx)) {
+      r_test_2_data[idk_idx$row[i], idk_idx$col[i]] <- idk_imp[i]
+    }
+    r_test_2_data <- as.data.frame(r_test_2_data)
+    # Create ID for each entry and group of people 
+    r_2_data_ID <- data_id(r_test_2_data)
+    # Create dictionary of IDs, entry names and branching questions
+    r_2_dictionary <- id_dictionary(r_test_2_data)
+    # Format data for creation of nexus file
+    r_2_data_nexus <- nexus_formatting(r_2_data_ID)
+    # Save data
+    write_csv(r_2_data_ID, paste0("./output/", analysis, "_", granularity, "_r2_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+    write_csv(r_2_dictionary, paste0("./output/", analysis, "_", granularity, "_r2_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
+    # Write nexus data
+    write_morph_nexus(r_2_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r2_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
+  }  
   #### Robustness test 3
   # Impute Field doesn't know and I don't know answers with glrm
   # Format data for robustness test 3
   r_test_3_data <- robustness_test_format(raw_data, filtered_data, data_ID, robustness_test = "3")
   # Index field doesn't know and I don't know values
-  fdk_idk_idx <- as.data.frame(which(r_test_3_data == -1 | r_test_3_data == -2 , arr.ind=TRUE)) 
-  # Extract the imputed values of I don't know answers
-  fdk_idk_imp <- list()
-  for(i in 1:nrow(fdk_idk_idx)) {
-    fdk_idk_imp[[i]] <- data_imputed_id[fdk_idk_idx$row[i], fdk_idk_idx$col[i]]
+  fdk_idk_idx <- as.data.frame(which(r_test_3_data == -1 | r_test_3_data == -2 , arr.ind=TRUE))
+  # If there are field doesn't know and I don't know answers perform robustness test
+  if(nrow(fdk_idk_idx) > 0) {
+    # Extract the imputed values of I don't know answers
+    fdk_idk_imp <- list()
+    for(i in 1:nrow(fdk_idk_idx)) {
+      fdk_idk_imp[[i]] <- data_imputed_id[fdk_idk_idx$row[i], fdk_idk_idx$col[i]]
+    }
+    fdk_idk_imp <- as.numeric(unlist(fdk_idk_imp))
+    # Replace I don't know answers with imputed values
+    r_test_3_data <- as.matrix(r_test_3_data)
+    for(i in 1:nrow(fdk_idk_idx)) {
+      r_test_3_data[fdk_idk_idx$row[i], fdk_idk_idx$col[i]] <- fdk_idk_imp[i]
+    }
+    r_test_3_data <- as.data.frame(r_test_3_data)
+    # Create ID for each entry and group of people 
+    r_3_data_ID <- data_id(r_test_3_data)
+    # Create dictionary of IDs, entry names and branching questions
+    r_3_dictionary <- id_dictionary(r_test_3_data)
+    # Format data for creation of nexus file
+    r_3_data_nexus <- nexus_formatting(r_3_data_ID)
+    # Save data
+    write_csv(r_3_data_ID, paste0("./output/", analysis, "_", granularity, "_r3_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+    write_csv(r_3_dictionary, paste0("./output/", analysis, "_", granularity, "_r3_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
+    # Write nexus data
+    write_morph_nexus(r_3_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r3_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
   }
-  fdk_idk_imp <- as.numeric(unlist(fdk_idk_imp))
-  # Replace I don't know answers with imputed values
-  r_test_3_data <- as.matrix(r_test_3_data)
-  for(i in 1:nrow(fdk_idk_idx)) {
-    r_test_3_data[fdk_idk_idx$row[i], fdk_idk_idx$col[i]] <- fdk_idk_imp[i]
-  }
-  r_test_3_data <- as.data.frame(r_test_3_data)
-  # Create ID for each entry and group of people 
-  r_3_data_ID <- data_id(r_test_3_data)
-  # Create dictionary of IDs, entry names and branching questions
-  r_3_dictionary <- id_dictionary(r_test_3_data)
-  # Format data for creation of nexus file
-  r_3_data_nexus <- nexus_formatting(r_3_data_ID)
-  # Save data
-  write_csv(r_3_data_ID, paste0("./output/", analysis, "_", granularity, "_r3_data_", var_filt_per, "_", entry_filt_per, ".csv"))
-  write_csv(r_3_dictionary, paste0("./output/", analysis, "_", granularity, "_r3_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
-  # Write nexus data
-  write_morph_nexus(r_3_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r3_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
   
   #### Robustness test 4 
   # Impute all missing values with glrm
-    # Format data for robustness test 4
-    r_test_4_data <- robustness_test_format(raw_data, filtered_data, data_ID, robustness_test = "4")
-    # Index all unanswered, field doesn't know and I don't know answers
-    missing_idx <- as.data.frame(which(r_test_4_data == -1 | r_test_4_data == -2 | is.na(r_test_4_data), arr.ind=TRUE)) 
+  # Format data for robustness test 4
+  r_test_4_data <- robustness_test_format(raw_data, filtered_data, data_ID, robustness_test = "4")
+  # Index all unanswered, field doesn't know and I don't know answers
+  missing_idx <- as.data.frame(which(r_test_4_data == -1 | r_test_4_data == -2 | is.na(r_test_4_data), arr.ind=TRUE)) 
+  # If there are missing answers perform robustness test
+  if(nrow(missing_idx) > 0) {
     # Extract the imputed values of field doesn't know answers
     missing_imp <- list()
     for(i in 1:nrow(missing_idx)) {
@@ -562,17 +572,18 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
       r_test_4_data[missing_idx$row[i], missing_idx$col[i]] <- missing_imp[i]
     }
     r_test_4_data <- as.data.frame(r_test_4_data)
-  # Create ID for each entry and group of people 
-  r_4_data_ID <- data_id(r_test_4_data)
-  # Create dictionary of IDs, entry names and branching questions
-  r_4_dictionary <- id_dictionary(r_test_4_data)
-  # Format data for creation of nexus file
-  r_4_data_nexus <- nexus_formatting(r_4_data_ID)
-  # Save data
-  write_csv(r_4_data_ID, paste0("./output/", analysis, "_", granularity, "_r4_data_", var_filt_per, "_", entry_filt_per, ".csv"))
-  write_csv(r_4_dictionary, paste0("./output/", analysis, "_", granularity, "_r4_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
-  # Write nexus data
-  write_morph_nexus(r_4_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r4_", var_filt_per, "_", entry_filt_per,".nex"), missing = "?")
+    # Create ID for each entry and group of people 
+    r_4_data_ID <- data_id(r_test_4_data)
+    # Create dictionary of IDs, entry names and branching questions
+    r_4_dictionary <- id_dictionary(r_test_4_data)
+    # Format data for creation of nexus file
+    r_4_data_nexus <- nexus_formatting(r_4_data_ID)
+    # Save data
+    write_csv(r_4_data_ID, paste0("./output/", analysis, "_", granularity, "_r4_data_", var_filt_per, "_", entry_filt_per, ".csv"))
+    write_csv(r_4_dictionary, paste0("./output/", analysis, "_", granularity, "_r4_ID_dict_", var_filt_per, "_", entry_filt_per, ".csv"))
+    # Write nexus data
+    write_morph_nexus(r_4_data_nexus, file = paste0("./output/", analysis, "_", granularity, "_r4_", var_filt_per, "_", entry_filt_per, ".nex"), missing = "?")
+  }
 }
 
 # Create dictionary of IDs and metadata
