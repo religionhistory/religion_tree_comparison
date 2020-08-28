@@ -52,11 +52,10 @@ replace_unknown_na <- function(data){
   data
 }
 
-# Filter data 
+# Filter data
 filter_data <- function(data, var_filter, entry_filter) {
   entry_filt <- rowMeans(is.na(data)) < entry_filter
   question_filt <- colMeans(is.na(data)) < var_filter
-  # Remove questions and entries with >filter% missing values 
   data <- data[entry_filt, question_filt]
   # Recombine entries where the different branching question answers (Elite, Non-elite and religious specialist) have the same answers for all questions
   data <- group_combine(data)
@@ -333,6 +332,8 @@ glrm_k_idx <- function(raw_data, analysis, granularity, var_filter, entry_filter
     # recombine entries where the different branching question answers (Elite, Non-elite and religious specialist) have the same answers for all questions
     filtered_data <- diff_group_comb(filtered_data)
   }
+  # Remove constant columns
+  filtered_data <- filtered_data[sapply(filtered_data, function(x) length(unique(x))) > 1]
   # Remove Yes or No answers for glrm
   filtered_data[filtered_data == "{01}"] <- "3"
   # Select entry ID and branching question
@@ -422,6 +423,9 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
     # recombine entries where the different branching question answers (Elite, Non-elite and religious specialist) have the same answers for all questions
     filtered_data <- diff_group_comb(filtered_data)
   }
+  # Remove constant columns
+  filtered_data <- filtered_data[sapply(filtered_data, function(x) length(unique(x))) > 1]
+  
   # Convert filtering to percentage
   var_filt_per <- var_filter * 100
   entry_filt_per <- entry_filter * 100
@@ -448,7 +452,7 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
   data_no_id <- filtered_data %>% select(-`Entry ID`, -`Branching question`)
   # Remove Yes or No answers for glrm
   data_no_id[data_no_id == "{01}"] <- "3"
-  
+
   # GLRM
   data_imputed <- glrm_impute(data_no_id, k)
   # Recombine data with entry names and branching questions
@@ -554,24 +558,24 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
   
   #### Robustness test 4 
   # Impute all missing values with glrm
-  # Format data for robustness test 4
-  r_test_4_data <- robustness_test_format(raw_data, filtered_data, data_ID, robustness_test = "4")
-  # Index all unanswered, field doesn't know and I don't know answers
-  missing_idx <- as.data.frame(which(r_test_4_data == -1 | r_test_4_data == -2 | is.na(r_test_4_data), arr.ind=TRUE)) 
-  # If there are missing answers perform robustness test
-  if(nrow(missing_idx) > 0) {
+    # Format data for robustness test 4
+    r_test_4_data <- robustness_test_format(raw_data, filtered_data, data_ID, robustness_test = "4")
+    # Index all unanswered, field doesn't know and I don't know answers
+    missing_idx <- as.data.frame(which(r_test_4_data == -1 | r_test_4_data == -2 | is.na(r_test_4_data), arr.ind=TRUE)) 
+    # If there are missing answers perform robustness test
+    if(nrow(missing_idx) > 0) {
     # Extract the imputed values of field doesn't know answers
-    missing_imp <- list()
-    for(i in 1:nrow(missing_idx)) {
-      missing_imp[[i]] <- data_imputed_id[missing_idx$row[i], missing_idx$col[i]]
-    }
-    missing_imp <- as.numeric(unlist(missing_imp))
-    # Replace field doesn't know answers with imputed values
-    r_test_4_data <- as.matrix(r_test_4_data)
-    for(i in 1:nrow(missing_idx)) {
-      r_test_4_data[missing_idx$row[i], missing_idx$col[i]] <- missing_imp[i]
-    }
-    r_test_4_data <- as.data.frame(r_test_4_data)
+      missing_imp <- list()
+      for(i in 1:nrow(missing_idx)) {
+        missing_imp[[i]] <- data_imputed_id[missing_idx$row[i], missing_idx$col[i]]
+      }
+      missing_imp <- as.numeric(unlist(missing_imp))
+      # Replace field doesn't know answers with imputed values
+      r_test_4_data <- as.matrix(r_test_4_data)
+      for(i in 1:nrow(missing_idx)) {
+        r_test_4_data[missing_idx$row[i], missing_idx$col[i]] <- missing_imp[i]
+      }
+      r_test_4_data <- as.data.frame(r_test_4_data)
     # Create ID for each entry and group of people 
     r_4_data_ID <- data_id(r_test_4_data)
     # Create dictionary of IDs, entry names and branching questions
