@@ -333,7 +333,7 @@ glrm_k_idx <- function(raw_data, analysis, granularity, var_filter, entry_filter
     filtered_data <- diff_group_comb(filtered_data)
   }
   # Remove constant columns
-  filtered_data <- filtered_data[sapply(filtered_data, function(x) length(unique(x))) > 1]
+  filtered_data <- filtered_data[sapply(filtered_data, function(x) length(unique(na.omit(x)))) > 1]
   # Remove Yes or No answers for glrm
   filtered_data[filtered_data == "{01}"] <- "3"
   # Select entry ID and branching question
@@ -424,7 +424,7 @@ make_nexus_dict <- function(raw_data, analysis, granularity, var_filter, entry_f
     filtered_data <- diff_group_comb(filtered_data)
   }
   # Remove constant columns
-  filtered_data <- filtered_data[sapply(filtered_data, function(x) length(unique(x))) > 1]
+  filtered_data <- filtered_data[sapply(filtered_data, function(x) length(na.omit(unique(x)))) > 1]
   
   # Convert filtering to percentage
   var_filt_per <- var_filter * 100
