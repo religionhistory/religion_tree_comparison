@@ -12,9 +12,9 @@ names(csv_files_list) <- csv_files_names
 list2env(csv_files_list, globalenv())
 
 # Read tree files into global environment
-tree_files <- list.files(path = "./input", pattern = "*.trees", full.names = T)
+tree_files <- list.files(path = "./input", pattern = "*.tree", full.names = T)
 tree_files_list <- lapply(tree_files, read.nexus)
-tree_files_names <- gsub(".trees", "", list.files(path = "./input", pattern = "*.trees"))
+tree_files_names <- gsub(".tree", "", list.files(path = "./input", pattern = "*.tree"))
 tree_files_names <- gsub("mcct", "phylo", tree_files_names)
 names(tree_files_list) <- tree_files_names
 list2env(tree_files_list, globalenv())
