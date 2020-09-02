@@ -5,7 +5,7 @@ source("./project_support.r")
 
 # Visualize phylogeny
 make.dir("./03_visualization/input")
-files <- c("./02_make_nexus/output/b_f_con_data_50.csv", "./02_make_nexus/output/b_f_con_ID_dict_50.csv", "./data/drh.csv", "./data/BEAST2/b_c_50/con/b_c_con_50_mcct.trees")
+files <- c("./02_make_nexus/output/b_f_con_data_50_50.csv", "./02_make_nexus/output/b_f_con_ID_dict_50_50.csv", "./data/drh.csv", "./data/BEAST2/b_f_50_50/con/b_f_con_50_50_mcct.tree")
 file.copy(files, "./03_visualization/input")
 setwd("./03_visualization/")
 source("visualization.r")

@@ -8,7 +8,7 @@ source("../project_support.r")
 data <- read_csv("./input/b_f_con_data_50_50.csv")
 id_dictionary <- read_csv("./input/b_f_con_ID_dict_50_50.csv")
 raw_data <- read_csv("./input/drh.csv")
-phylogeny <- read.nexus(file = "./input/b_f_con_50_50_mcct.trees")
+phylogeny <- read.nexus(file = "./input/b_f_con_50_50_mcct.tree")
 
 # Combine dictionary with metadata
 dictionary <- id_metadata_dictionary(id_dictionary, raw_data, phylogeny)
