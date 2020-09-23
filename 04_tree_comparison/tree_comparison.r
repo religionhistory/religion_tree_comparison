@@ -40,7 +40,6 @@ tree_compare(a_f_r3_data_50_50, a_f_r3_ID_dict_50_50, a_f_r3_50_50_phylo, "a_f_r
 tree_compare(a_f_r4_data_50_50, a_f_r4_ID_dict_50_50, a_f_r4_50_50_phylo, "a_f_r4_50_50")
 tree_compare(a_f_con_data_35_30, a_f_con_ID_dict_35_30, a_f_con_35_30_phylo, "a_f_con_35_30")
 tree_compare(a_f_r1_data_35_30, a_f_r1_ID_dict_35_30, a_f_r1_35_30_phylo, "a_f_r1_35_30")
-tree_compare(a_f_r2_data_35_30, a_f_r2_ID_dict_35_30, a_f_r2_35_30_phylo, "a_f_r2_35_30")
 tree_compare(a_f_r3_data_35_30, a_f_r3_ID_dict_35_30, a_f_r3_35_30_phylo, "a_f_r3_35_30")
 tree_compare(a_f_r4_data_35_30, a_f_r4_ID_dict_35_30, a_f_r4_35_30_phylo, "a_f_r4_35_30")
 tree_compare(b_c_con_data_50_50, b_c_con_ID_dict_50_50, b_c_con_50_50_phylo, "b_c_con_50_50")
@@ -60,7 +59,6 @@ tree_compare(b_f_r3_data_50_50, b_f_r3_ID_dict_50_50, b_f_r3_50_50_phylo, "b_f_r
 tree_compare(b_f_r4_data_50_50, b_f_r4_ID_dict_50_50, b_f_r4_50_50_phylo, "b_f_r4_50_50")
 tree_compare(b_f_con_data_35_30, b_f_con_ID_dict_35_30, b_f_con_35_30_phylo, "b_f_con_35_30")
 tree_compare(b_f_r1_data_35_30, b_f_r1_ID_dict_35_30, b_f_r1_35_30_phylo, "b_f_r1_35_30")
-tree_compare(b_f_r2_data_35_30, b_f_r2_ID_dict_35_30, b_f_r2_35_30_phylo, "b_f_r2_35_30")
 tree_compare(b_f_r3_data_35_30, b_f_r3_ID_dict_35_30, b_f_r3_35_30_phylo, "b_f_r3_35_30")
 tree_compare(b_f_r4_data_35_30, b_f_r4_ID_dict_35_30, b_f_r4_35_30_phylo, "b_f_r4_35_30")
 
