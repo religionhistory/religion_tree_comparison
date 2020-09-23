@@ -177,7 +177,74 @@ robustness_test_format <- function(raw_data, filtered_data, data_ID, robustness_
   data = group_combine(filtered_raw_data) %>%
     mutate(ID = paste0(`Entry ID`, "_", `Branching question`)) %>%
     filter(ID %in% data_ID$ID)
-  # Format data for each robustness test
+  # Find any rows not subsetted
+  if(nrow(data) != nrow(data_ID)) {
+    non_extracted_data = data_ID %>%
+      filter(!ID %in% data$ID) %>%
+      separate(ID, c("Entry ID","Branching question"), sep = '_')
+    if(max(nchar(non_extracted_data$`Branching question`)) > 1) {
+      non_extracted_data = non_extracted_data %>%
+        mutate(`Branching question` = strsplit(`Branching question`, "")) %>%
+        unnest(`Branching question`) }
+    # Extract entries not initially extracted
+    non_extracted_entry = filtered_raw_data %>%
+      filter(`Entry ID` %in% non_extracted_data$`Entry ID` & `Branching question` %in% non_extracted_data$`Branching question`) 
+    if(length(unique(non_extracted_entry$`Entry ID`)) < nrow(non_extracted_entry)) {
+      non_extracted_entry = non_extracted_entry %>%
+        mutate_all(as.character) %>%
+        pivot_longer(c(-`Entry ID`, -`Branching question`), names_to = "Question", values_to = "Answers") %>%
+        group_by(`Entry ID`, Question) %>%
+        # Yes and unanswered, yes and field doesn't know and yes and I don't know treated as Yes
+        mutate(answer_yes = ifelse(is.na(Answers) & lead(Answers) == "1" | is.na(Answers) & lag(Answers) == "1" | Answers == "-1" & lead(Answers) == "1" | Answers == "-1" & lag(Answers) == "1" | Answers == "-2" & lead(Answers) == "1" | Answers == "-2" & lag(Answers) == "1", "1", NA)) %>%
+        # No and unanswered, no and field doesn't know and no and I don't know treated as No
+        mutate(answer_no = ifelse(is.na(Answers) & lead(Answers) == "0" | is.na(Answers) & lag(Answers) == "0" | Answers == "-1" & lead(Answers) == "0" | Answers == "-1" & lag(Answers) == "0" | Answers == "-2" & lead(Answers) == "0" | Answers == "-2" & lag(Answers) == "0", "0", NA)) %>%
+        # Field doesn't know and unanswered, and Field doesn't know and I don't know treated as Field doesn't know
+        mutate(answer_fdk = ifelse(is.na(Answers) & lead(Answers) == "-1" | is.na(Answers) & lag(Answers) == "-1" | Answers == "-2" & lead(Answers) == "-1" | Answers == "-2" & lag(Answers) == "-1", "-1", NA)) %>%
+        # I don't know and unanswered treated as I don't know 
+        mutate(answer_idk = ifelse(is.na(Answers) & lead(Answers) == "-2" | is.na(Answers) & lag(Answers) == "-2", "-2", NA)) %>%
+        mutate(Answers = ifelse(!is.na(answer_yes), answer_yes, 
+                                ifelse(!is.na(answer_no), answer_no,
+                                       ifelse(!is.na(answer_fdk), answer_fdk,
+                                              ifelse(!is.na(answer_idk), answer_idk,
+                                                     Answers))))) %>%
+        ungroup() %>%
+        select(-answer_yes, -answer_no, -answer_fdk, -answer_idk) %>%
+        pivot_wider(names_from = Question, values_from = Answers) %>%
+        group_by_at(setdiff(names(non_extracted_entry),"Branching question")) %>%
+        # Combine branching questions with identical answers
+        summarise(`Branching question` = paste(unique(`Branching question`), collapse="")) %>% 
+        ungroup() %>%
+        pivot_longer(c(-`Entry ID`, -`Branching question`), names_to = "Question", values_to = "Answers") %>%
+        group_by(`Entry ID`, Question) %>%
+        # Yes and unanswered, yes and field doesn't know and yes and I don't know treated as yes
+        mutate(answer_yes = ifelse(is.na(Answers) & lead(Answers) == "1" | is.na(Answers) & lag(Answers) == "1" | Answers == "-1" & lead(Answers) == "1" | Answers == "-1" & lag(Answers) == "1" | Answers == "-2" & lead(Answers) == "1" | Answers == "-2" & lag(Answers) == "1", "1", NA)) %>%
+        # No and unanswered, no and field doesn't know and no and I don't know treated as No
+        mutate(answer_no = ifelse(is.na(Answers) & lead(Answers) == "0" | is.na(Answers) & lag(Answers) == "0" | Answers == "-1" & lead(Answers) == "0" | Answers == "-1" & lag(Answers) == "0" | Answers == "-2" & lead(Answers) == "0" | Answers == "-2" & lag(Answers) == "0", "0", NA)) %>%
+        # Field doesn't know and unanswered treated as field doesn't know
+        mutate(answer_fdk = ifelse(is.na(Answers) & lead(Answers) == "-1" | is.na(Answers) & lag(Answers) == "-1", "-1", NA)) %>%
+        # I don't know and unanswered treated as I don't know
+        mutate(answer_idk = ifelse(is.na(Answers) & lead(Answers) == "-2" | is.na(Answers) & lag(Answers) == "-2", "-2", NA)) %>%
+        # Yes and No treated as Yes or No 
+        mutate(answer_yes_no = ifelse(Answers == "1" & lead(Answers) == "0" | Answers == "0" & lead(Answers) == "1" | Answers == "1" & lag(Answers) == "0" | Answers == "0" & lag(Answers) == "1" | Answers == "{01}" & lag(Answers) == "0" | Answers == "{01}" & lead(Answers) == "0" | Answers == "0" & lag(Answers) == "{01}" | Answers == "0" & lead(Answers) == "{01}" | Answers == "{01}" & lag(Answers) == "1" | Answers == "{01}" & lead(Answers) == "1" | Answers == "1" & lag(Answers) == "{01}" | Answers == "1" & lead(Answers) == "{01}", "{01}", NA)) %>%
+        mutate(Answers = ifelse(!is.na(answer_yes), answer_yes, 
+                                ifelse(!is.na(answer_no), answer_no,
+                                       ifelse(!is.na(answer_yes_no), answer_yes_no, 
+                                              ifelse(!is.na(answer_fdk), answer_fdk,
+                                                     ifelse(!is.na(answer_idk), answer_idk, Answers)))))) %>%
+        ungroup() %>%
+        select(-answer_yes, -answer_no, -answer_yes_no, -answer_fdk, -answer_idk) %>%
+        pivot_wider(names_from = Question, values_from = Answers) %>%
+        group_by_at(setdiff(names(non_extracted_entry),"Branching question")) %>%
+        # Combine branching questions with identical answers
+        group_combine()
+    } 
+    non_extracted_entry = non_extracted_entry %>%
+      mutate(ID = paste0(`Entry ID`, "_", `Branching question`)) 
+    # Readd entries that were not initially extracted
+    data = rbind(data, non_extracted_entry)
+  } else {
+    data = data
+  } # Format data for each robustness test
   if(robustness_test == "1") {
     # Replace I don't know with missing
     data[data == "-2"] <- NA
