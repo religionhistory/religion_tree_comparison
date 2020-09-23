@@ -24,11 +24,11 @@ phylogeny_edges <- phylo_edge_length(phylogeny)
 # Plot tree with branch lengths, tip labels and circles indicating which group of people(s) entry covers
 phylo_group <- plot_phylo_group(phylogeny, phylogeny_edges, dictionary)
 # Add heatmap of answers
-phylo_heatmap <- gheatmap(phylo_group, data, offset=0.015, width=0.5, colnames = FALSE, font.size=2) +
-  scale_fill_manual(values = c("#ccebc5", "#ffffb3", "#fb8072", "#80b1d3"), breaks=c("1", "0", "-1", "{01}"), labels = c("Yes", "No", "Unknown", "Uncertainty (Yes or No)")) +
+phylo_heatmap <- gheatmap(phylo_group, data, offset=0.012, width=0.42, colnames = FALSE, font.size=2) +
+  scale_fill_manual(values = c("#91bfdb", "#fc8d59", "#ffffbf"), breaks=c("1", "0", "{01}"), labels = c("Yes", "No", "Uncertainty (Yes or No)")) +
     guides(fill = guide_legend(title="Value")) 
 # Save plot
-pdf("../figures/heatmap_tree.pdf", height = 24, width = 15)
+pdf("../figures/heatmap_tree.pdf", height = 15, width = 20)
 plot(phylo_heatmap)
 dev.off()
 
@@ -36,14 +36,14 @@ dev.off()
 religion_tags <- dictionary %>%
   select(label, ID, `Entry ID`, `Entry name`, `Branching question`, `Entry tags`) %>%
   rename(entrytags = `Entry tags`) %>%
-  separate(entrytags, c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"), ",") %>%
+  separate(entrytags, c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"), ",") %>%
   # Extract just tags without path
-  mutate_at(.vars = c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"), 
+  mutate_at(.vars = c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"), 
             .funs = gsub,
             pattern = ".*->\\s*",
             replacement = "") %>% 
   group_by(label, ID, `Entry ID`, `Entry name`, `Branching question`) %>%
-  summarise(entry_tags = toString(c(A, B, C, D, E, F, G, H, I, J, K, L, M))) %>%
+  summarise(entry_tags = toString(c(A, B, C, D, E, F, G, H, I, J, K, L, M, O, P, Q, R, S, T, U, V, W))) %>%
   ungroup() %>%
   # remove NAs and spaces from strings
   mutate(entry_tags = gsub(", NA,", "", entry_tags)) %>%
@@ -61,7 +61,7 @@ phylo_religious_group <- phylo_edge %<+% religion_tags +
   geom_tiplab(aes(label = entry_tags), size=2, offset=0.01) +
   xlim(0, 1)
 # save plot
-pdf("../figures/religious_group_tree.pdf", height = 24, width = 22)
+pdf("../figures/religious_group_tree.pdf", height = 15, width = 22)
 plot(phylo_religious_group)
 dev.off()
 
@@ -70,7 +70,7 @@ phylo_expert <- phylo_edge %<+% dictionary +
   geom_tiplab(aes(label = Expert), size=3, offset=0.01) +
   xlim(0, 1)
 # save plot
-pdf("../figures/expert_tree.pdf", height = 24, width = 20)
+pdf("../figures/expert_tree.pdf", height = 15, width = 20)
 plot(phylo_expert)
 dev.off()
 
@@ -100,7 +100,7 @@ phylo_region <- phylo_edge %<+% region_tags +
   geom_tiplab(aes(label = region_tags), size=3, offset=0.01) +
   xlim(0, 1)
 # save plot
-pdf("../figures/region_tree.pdf", height = 24, width = 22)
+pdf("../figures/region_tree.pdf", height = 15, width = 22)
 plot(phylo_region)
 dev.off()
 
@@ -109,6 +109,6 @@ phylo_source <- phylo_edge %<+% dictionary +
   geom_tiplab(aes(label = `Entry source`), size=3, offset=0.01) +
   xlim(0, 1)
 # save plot
-pdf("../figures/source_tree.pdf", height = 24, width = 22)
+pdf("../figures/source_tree.pdf", height = 15, width = 22)
 plot(phylo_source)
 dev.off()
