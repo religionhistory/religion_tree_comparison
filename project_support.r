@@ -1,6 +1,13 @@
 # Check if packages are installed and if they are not installed, install them
-packages <- c("tidyverse", "data.table", "ape", "igraph", "adephylo", "ggtree", "h2o", "rlist")
+packages <- c("tidyverse", "data.table", "ape", "igraph", "adephylo", "h2o", "rlist", "ggpubr")
 install.packages(setdiff(packages, rownames(installed.packages())))
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+bioc_packages <- "ggtree"
+bioc_missing <- setdiff("ggtree", rownames(installed.packages())) 
+if( length(bioc_missing) ) {
+  biocLite(bioc_packages[bioc_missing])
+}
 
 # Load packages
 library(tidyverse)
@@ -11,6 +18,7 @@ library(adephylo)
 library(ggtree)
 library(h2o)
 library(rlist)
+library(ggpubr)
 
 # Functions
 
@@ -21,7 +29,7 @@ make.dir <- function(fp) {
     make.dir(dirname(fp))
     dir.create(fp)
   } else {   # If it existed, delete and replace with a new one  
-    unlink(fp, recursive = TRUE)
+    unlink(fp, recursive = FALSE)
     dir.create(fp)
   }
 } 
@@ -965,4 +973,80 @@ tree_compare <- function(data, id_dictionary, phylogeny, output){
   names(cor_list) <- c("taxa_correlations", "whole_matrix_correlations", "taxa_tag_level_correlations")
   # Save output
   list.save(cor_list, paste0("./output/", output, "_cor.rds"))
+}
+
+# Find distinguishing questions between clusters
+compare_clusters <- function(data) {
+  if("label" %in% colnames(data)) {
+    clusters <- data %>%
+      select(-ID, -`Entry ID`, -`Branching question`, -`Entry name`, -`Entry source`, -`Entry description`, -`Entry tags`, -Expert, -`Start year`, -`End year`, -`Region ID`, -`Region name`, -`Region description`, -`Region tags`, -label, -elite, -non_elite, -religious_specialist)
+  } else {
+    clusters <- data %>%
+      select(-ID, -`Entry ID`, -`Branching question`, -`Entry name`, -`Entry source`, -`Entry description`, -`Entry tags`, -Expert, -`Start year`, -`End year`, -`Region ID`, -`Region name`, -`Region description`, -`Region tags`)
   }
+  clusters <- clusters %>%
+    mutate_all(as.character) %>%
+    pivot_longer(c(-Cluster), names_to = "Question", values_to = "Answers") %>%
+    group_by(Cluster, Question, Answers) %>%
+    summarise(Frequency=n()) %>%
+    ungroup() %>%
+    group_by(Cluster, Question) %>%
+    mutate(group_total = sum(Frequency)) %>%
+    ungroup() %>%
+    group_by(Cluster, Question, Answers) %>%
+    mutate(Percentage = case_when(Cluster == 1 ~ Frequency/nrow(data[data$Cluster == 1,]) * 100,
+                                  Cluster == 2 ~ Frequency/nrow(data[data$Cluster == 2,]) * 100)) %>%
+    mutate(Percentage = round(Percentage, 2)) %>%
+    select(-Frequency, -group_total) %>%
+    pivot_wider(names_from = Cluster, values_from = Percentage) %>%
+    rename("Cluster_1" = "1", "Cluster_2" = "2") %>% 
+    mutate(Cluster_1 = ifelse(is.na(Cluster_1), 0, Cluster_1)) %>%
+    mutate(Cluster_2 = ifelse(is.na(Cluster_2), 0, Cluster_2)) %>%
+    mutate(Difference = abs(Cluster_1 - Cluster_2)) %>%
+    rename("Question ID" = "Question") %>%
+    mutate(`Question ID` = as.numeric(`Question ID`)) %>%
+    inner_join(questions) %>%
+    select(`Question ID`, Question, everything()) %>%
+    arrange(desc(Difference))
+}
+
+
+# Compare distance between taxa from the same and different entries
+taxa_branch_length <- function(phylogeny, file, plot_title){
+  # Create distance matrix of branch lengths
+  branch_length <- cophenetic(phylogeny)
+  # Convert to pairwise list
+  pairs <- t(combn(colnames(branch_length), 2))
+  pairs_distance <- data.frame(pairs, dist=branch_length[pairs])
+  # Find taxa from the same entry
+  pairs_distance <- pairs_distance %>%
+    rename("taxa_1" = X1, "taxa_2" = X2, "Distance" = dist) %>%
+    mutate(across(where(is.character), ~str_extract(., "[^_]+"))) %>%
+    mutate(Taxa = if_else(taxa_1 == taxa_2, "Same entry", "Different entries"))
+  # Plot data
+  ggplot(pairs_distance, aes(x=Taxa, y=Distance)) + 
+    geom_violin() +
+    geom_jitter(shape=16, position=position_jitter(0.5)) +
+    labs(title = plot_title) +
+    theme_classic() + 
+    theme(
+      axis.text = element_text(colour = "black", size=11),
+      axis.title.x = element_text(size = 13),
+      axis.title.y = element_text(size = 13)) +
+    stat_compare_means(method = "t.test", vjust = -0.8) 
+  output_loc <- paste0("./output/", file, ".pdf")
+  ggsave(output_loc, width = 5.5, height = 5.2)
+}
+
+# Find the frequency of tag levels
+tag_levels <- function(id_dictionary, phylogeny, output) {
+  # Combine dictionary with metadata
+  dictionary <- id_metadata_dictionary(id_dictionary, drh, phylogeny)
+  # Find tag levels and frequency of tags per religious group
+  tags <- tag_level_freq(dictionary) %>%
+    group_by(tag_level) %>%
+    tally() %>%
+    rename("Tag Level" = tag_level, "Frequency" = n)
+  # Save output
+  write_csv(tags, paste0("./output/", output, "_levels.csv"))
+}

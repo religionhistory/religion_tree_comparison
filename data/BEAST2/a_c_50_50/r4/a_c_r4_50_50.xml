@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beast beautitemplate='Standard' beautistatus='' namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" required="" version="2.6">
+
+
+    <data
+id="a_c_r4_50_50"
+spec="Alignment"
+dataType="standard">
+                        <sequence id="seq_173_N" spec="Sequence" taxon="173_N" totalcount="2" value="00011001100001111110000000001000001"/>
+                        <sequence id="seq_174_N" spec="Sequence" taxon="174_N" totalcount="2" value="11001001101001111110000000001000001"/>
+                        <sequence id="seq_176_R" spec="Sequence" taxon="176_R" totalcount="2" value="11011101100001111110000110{01}11011101"/>
+                        <sequence id="seq_176_E" spec="Sequence" taxon="176_E" totalcount="2" value="11011001100001111110000110{01}11011101"/>
+                        <sequence id="seq_182_R" spec="Sequence" taxon="182_R" totalcount="2" value="11011001100{01}00111110000100001000001"/>
+                        <sequence id="seq_184_E" spec="Sequence" taxon="184_E" totalcount="2" value="11111111111001111110001000011100101"/>
+                        <sequence id="seq_190_N" spec="Sequence" taxon="190_N" totalcount="2" value="11101110111001111110000000111100001"/>
+                        <sequence id="seq_190_R" spec="Sequence" taxon="190_R" totalcount="2" value="11111111111001111110000100101000101"/>
+                        <sequence id="seq_190_E" spec="Sequence" taxon="190_E" totalcount="2" value="11111111111001111110000000011000001"/>
+                        <sequence id="seq_195_N" spec="Sequence" taxon="195_N" totalcount="2" value="10111111111001111110000100011000001"/>
+                        <sequence id="seq_196_EN" spec="Sequence" taxon="196_EN" totalcount="2" value="1{01}011001100111111110000100001000001"/>
+                        <sequence id="seq_200_E" spec="Sequence" taxon="200_E" totalcount="2" value="11111111111000111100000101001011101"/>
+                        <sequence id="seq_201_EN" spec="Sequence" taxon="201_EN" totalcount="2" value="00111111101111111110000100101100001"/>
+                        <sequence id="seq_204_ER" spec="Sequence" taxon="204_ER" totalcount="2" value="10111111101110111110000100011001001"/>
+                        <sequence id="seq_211_E" spec="Sequence" taxon="211_E" totalcount="2" value="10111111101011111100000100011010001"/>
+                        <sequence id="seq_212_EN" spec="Sequence" taxon="212_EN" totalcount="2" value="00100101101111111100110000010000001"/>
+                        <sequence id="seq_222_ENR" spec="Sequence" taxon="222_ENR" totalcount="2" value="10111111111011101100100110011010001"/>
+                        <sequence id="seq_224_R" spec="Sequence" taxon="224_R" totalcount="2" value="00110111101111111100000100001000001"/>
+                        <sequence id="seq_224_E" spec="Sequence" taxon="224_E" totalcount="2" value="00110111101111111100000100001000001"/>
+                        <sequence id="seq_224_N" spec="Sequence" taxon="224_N" totalcount="2" value="00110111101011111100000100001000001"/>
+                        <sequence id="seq_227_EN" spec="Sequence" taxon="227_EN" totalcount="2" value="10011111111000111000000101011010001"/>
+                        <sequence id="seq_228_E" spec="Sequence" taxon="228_E" totalcount="2" value="10111111101011111100000100101011101"/>
+                        <sequence id="seq_230_ER" spec="Sequence" taxon="230_ER" totalcount="2" value="00110111101111111100000100011011001"/>
+                        <sequence id="seq_230_N" spec="Sequence" taxon="230_N" totalcount="2" value="00110111101111111100000100011011001"/>
+                        <sequence id="seq_231_EN" spec="Sequence" taxon="231_EN" totalcount="2" value="00110111100111111110000100011000101"/>
+                        <sequence id="seq_255_EN" spec="Sequence" taxon="255_EN" totalcount="2" value="10011001101111111100000100111000001"/>
+                        <sequence id="seq_263_N" spec="Sequence" taxon="263_N" totalcount="2" value="11111111100001110110000100011000101"/>
+                        <sequence id="seq_284_N" spec="Sequence" taxon="284_N" totalcount="2" value="10011001101011111000000100011000001"/>
+                        <sequence id="seq_308_R" spec="Sequence" taxon="308_R" totalcount="2" value="10100111100011111100100100011000101"/>
+                        <sequence id="seq_310_R" spec="Sequence" taxon="310_R" totalcount="2" value="10110111101111111100110000101100101"/>
+                        <sequence id="seq_310_E" spec="Sequence" taxon="310_E" totalcount="2" value="10100111101111111100110000111000101"/>
+                        <sequence id="seq_310_N" spec="Sequence" taxon="310_N" totalcount="2" value="10100111101011111100110000011000101"/>
+                        <sequence id="seq_354_ER" spec="Sequence" taxon="354_ER" totalcount="2" value="101111111010111111000001000{01}1001101"/>
+                        <sequence id="seq_355_ER" spec="Sequence" taxon="355_ER" totalcount="2" value="11011001100001111110000100011000101"/>
+                        <sequence id="seq_358_ENR" spec="Sequence" taxon="358_ENR" totalcount="2" value="11111111111111111110000100011000001"/>
+                        <sequence id="seq_361_ENR" spec="Sequence" taxon="361_ENR" totalcount="2" value="00110111101011111100000100011000001"/>
+                        <sequence id="seq_364_R" spec="Sequence" taxon="364_R" totalcount="2" value="10011111111011100010000100001110001"/>
+                        <sequence id="seq_364_EN" spec="Sequence" taxon="364_EN" totalcount="2" value="10011111111011100010000100001010001"/>
+                        <sequence id="seq_374_ENR" spec="Sequence" taxon="374_ENR" totalcount="2" value="10111111111001110100000100001000001"/>
+                        <sequence id="seq_378_N" spec="Sequence" taxon="378_N" totalcount="2" value="00000000000000000000000000011000001"/>
+                        <sequence id="seq_381_N" spec="Sequence" taxon="381_N" totalcount="2" value="00011101111000111100000000111000001"/>
+                        <sequence id="seq_383_N" spec="Sequence" taxon="383_N" totalcount="2" value="11011111110000110010000100011010001"/>
+                        <sequence id="seq_386_ENR" spec="Sequence" taxon="386_ENR" totalcount="2" value="00110111101011111100000100011000001"/>
+                        <sequence id="seq_387_ENR" spec="Sequence" taxon="387_ENR" totalcount="2" value="11011111101001111110000100001001101"/>
+                        <sequence id="seq_389_N" spec="Sequence" taxon="389_N" totalcount="2" value="1010{01}001101011111100000100011000001"/>
+                        <sequence id="seq_390_ENR" spec="Sequence" taxon="390_ENR" totalcount="2" value="00111111111000111100000100001000001"/>
+                        <sequence id="seq_392_N" spec="Sequence" taxon="392_N" totalcount="2" value="10011101111000111100000000111000001"/>
+                        <sequence id="seq_395_R" spec="Sequence" taxon="395_R" totalcount="2" value="11011111111011111110000000101100001"/>
+                        <sequence id="seq_400_N" spec="Sequence" taxon="400_N" totalcount="2" value="01011111101111111110000110001010101"/>
+                        <sequence id="seq_406_ER" spec="Sequence" taxon="406_ER" totalcount="2" value="11111001101001111110000110111011101"/>
+                        <sequence id="seq_415_R" spec="Sequence" taxon="415_R" totalcount="2" value="10111111111000111110000100011100001"/>
+                        <sequence id="seq_419_ENR" spec="Sequence" taxon="419_ENR" totalcount="2" value="10111111111000111110000000001001001"/>
+                        <sequence id="seq_420_ENR" spec="Sequence" taxon="420_ENR" totalcount="2" value="10011111111000111100000100001000001"/>
+                        <sequence id="seq_422_ENR" spec="Sequence" taxon="422_ENR" totalcount="2" value="10110110100011111100000100001000001"/>
+                        <sequence id="seq_424_ER" spec="Sequence" taxon="424_ER" totalcount="2" value="10111111101111111100000110111011101"/>
+                        <sequence id="seq_439_R" spec="Sequence" taxon="439_R" totalcount="2" value="00111001110000111100000000001000001"/>
+                        <sequence id="seq_440_R" spec="Sequence" taxon="440_R" totalcount="2" value="11111111111000111110000100001000001"/>
+                        <sequence id="seq_441_ENR" spec="Sequence" taxon="441_ENR" totalcount="2" value="10011111111001111100000100001000001"/>
+                        <sequence id="seq_442_ENR" spec="Sequence" taxon="442_ENR" totalcount="2" value="11011111101001111110000100001001001"/>
+                        <sequence id="seq_455_R" spec="Sequence" taxon="455_R" totalcount="2" value="11111111111001111110001000100100101"/>
+                        <sequence id="seq_455_EN" spec="Sequence" taxon="455_EN" totalcount="2" value="11111111111001111110001000100100101"/>
+                        <sequence id="seq_456_ENR" spec="Sequence" taxon="456_ENR" totalcount="2" value="11111001101001111110000110011111101"/>
+                        <sequence id="seq_469_ENR" spec="Sequence" taxon="469_ENR" totalcount="2" value="10011111111001000000000100001000101"/>
+                        <sequence id="seq_476_ENR" spec="Sequence" taxon="476_ENR" totalcount="2" value="10111111101011111100000100111010001"/>
+                        <sequence id="seq_477_ENR" spec="Sequence" taxon="477_ENR" totalcount="2" value="01011001100001101100000000001000001"/>
+                        <sequence id="seq_478_NR" spec="Sequence" taxon="478_NR" totalcount="2" value="11111111111001111100000000001000101"/>
+                        <sequence id="seq_479_ER" spec="Sequence" taxon="479_ER" totalcount="2" value="00110111101{01}1111110{01}{01}00110111011001"/>
+                        <sequence id="seq_483_N" spec="Sequence" taxon="483_N" totalcount="2" value="11011101101001111110000100001000001"/>
+                        <sequence id="seq_484_N" spec="Sequence" taxon="484_N" totalcount="2" value="11011001101001111110000000001000001"/>
+                        <sequence id="seq_485_ENR" spec="Sequence" taxon="485_ENR" totalcount="2" value="00000001110011110100000100011000001"/>
+                        <sequence id="seq_486_N" spec="Sequence" taxon="486_N" totalcount="2" value="11011111101001110010000100001000001"/>
+                        <sequence id="seq_490_N" spec="Sequence" taxon="490_N" totalcount="2" value="10111001101001101110000100001000001"/>
+                        <sequence id="seq_491_ENR" spec="Sequence" taxon="491_ENR" totalcount="2" value="11111111100001100010000100001011101"/>
+                        <sequence id="seq_492_ER" spec="Sequence" taxon="492_ER" totalcount="2" value="10110001101011111100000100001000001"/>
+                        <sequence id="seq_493_ENR" spec="Sequence" taxon="493_ENR" totalcount="2" value="10011111111001111100000100001000001"/>
+                        <sequence id="seq_520_ENR" spec="Sequence" taxon="520_ENR" totalcount="2" value="10111111111110111100000100111011001"/>
+                        <sequence id="seq_525_N" spec="Sequence" taxon="525_N" totalcount="2" value="11011111101001110010000100001000001"/>
+                        <sequence id="seq_526_N" spec="Sequence" taxon="526_N" totalcount="2" value="01011101100001111110000100111000001"/>
+                        <sequence id="seq_534_ENR" spec="Sequence" taxon="534_ENR" totalcount="2" value="10110111101111111110000110111011101"/>
+                        <sequence id="seq_535_ER" spec="Sequence" taxon="535_ER" totalcount="2" value="11111111111000111100001000011100101"/>
+                        <sequence id="seq_562_E" spec="Sequence" taxon="562_E" totalcount="2" value="11111001111001111110000100111000001"/>
+                        <sequence id="seq_563_ENR" spec="Sequence" taxon="563_ENR" totalcount="2" value="00011001111000111100000100011000001"/>
+                        <sequence id="seq_564_N" spec="Sequence" taxon="564_N" totalcount="2" value="11011101100001111110000100101000001"/>
+                        <sequence id="seq_570_ENR" spec="Sequence" taxon="570_ENR" totalcount="2" value="10011001110000110110000000001000101"/>
+                        <sequence id="seq_576_N" spec="Sequence" taxon="576_N" totalcount="2" value="00000011111011111100000000011000001"/>
+                        <sequence id="seq_580_R" spec="Sequence" taxon="580_R" totalcount="2" value="10111001111001101100000100011{01}00001"/>
+                        <sequence id="seq_586_N" spec="Sequence" taxon="586_N" totalcount="2" value="10000111111100111110000000011000001"/>
+                        <sequence id="seq_590_ER" spec="Sequence" taxon="590_ER" totalcount="2" value="10111111{01}11001{01}11100000100001100101"/>
+                        <sequence id="seq_592_N" spec="Sequence" taxon="592_N" totalcount="2" value="10{01}11111111011111100000000001000001"/>
+                        <sequence id="seq_597_E" spec="Sequence" taxon="597_E" totalcount="2" value="11011111100111110110000100001000001"/>
+                        <sequence id="seq_597_N" spec="Sequence" taxon="597_N" totalcount="2" value="11011111100111110110000100001000001"/>
+                        <sequence id="seq_605_R" spec="Sequence" taxon="605_R" totalcount="2" value="00001111111011101110000100011101101"/>
+                        <sequence id="seq_605_EN" spec="Sequence" taxon="605_EN" totalcount="2" value="00001111111011101110000100011100001"/>
+                        <sequence id="seq_607_EN" spec="Sequence" taxon="607_EN" totalcount="2" value="11000001101011111100000100001000001"/>
+                        <sequence id="seq_608_R" spec="Sequence" taxon="608_R" totalcount="2" value="11011111101001111100000100011001101"/>
+                        <sequence id="seq_608_EN" spec="Sequence" taxon="608_EN" totalcount="2" value="11011111101001111100000100011001101"/>
+                        <sequence id="seq_614_ENR" spec="Sequence" taxon="614_ENR" totalcount="2" value="00000001101011111100000100011000101"/>
+                        <sequence id="seq_624_NR" spec="Sequence" taxon="624_NR" totalcount="2" value="11111001101001111110000110111000001"/>
+                        <sequence id="seq_626_ENR" spec="Sequence" taxon="626_ENR" totalcount="2" value="00010001101011111000000000011000001"/>
+                        <sequence id="seq_627_ENR" spec="Sequence" taxon="627_ENR" totalcount="2" value="00110111101001101000000100011000001"/>
+                        <sequence id="seq_629_NR" spec="Sequence" taxon="629_NR" totalcount="2" value="10011101111101111100000100001000001"/>
+                        <sequence id="seq_632_ENR" spec="Sequence" taxon="632_ENR" totalcount="2" value="00111111101011111100000100001000001"/>
+                        <sequence id="seq_633_ER" spec="Sequence" taxon="633_ER" totalcount="2" value="10011001111001111110000000001000001"/>
+                        <sequence id="seq_635_ENR" spec="Sequence" taxon="635_ENR" totalcount="2" value="00110001101101111100000000011000001"/>
+                        <sequence id="seq_636_ER" spec="Sequence" taxon="636_ER" totalcount="2" value="10111111111000111100000100011000101"/>
+                        <sequence id="seq_637_NR" spec="Sequence" taxon="637_NR" totalcount="2" value="00000001101001111100000000011000001"/>
+                        <sequence id="seq_639_ER" spec="Sequence" taxon="639_ER" totalcount="2" value="11101111111011111110001100111111101"/>
+                        <sequence id="seq_645_N" spec="Sequence" taxon="645_N" totalcount="2" value="00001110101001111100000100011010001"/>
+                        <sequence id="seq_646_NR" spec="Sequence" taxon="646_NR" totalcount="2" value="00001011111011111000000100101000001"/>
+                        <sequence id="seq_649_ENR" spec="Sequence" taxon="649_ENR" totalcount="2" value="00111111111000100000000000001000001"/>
+                        <sequence id="seq_650_ENR" spec="Sequence" taxon="650_ENR" totalcount="2" value="00000001{01}01001111100000000011000001"/>
+                        <sequence id="seq_654_R" spec="Sequence" taxon="654_R" totalcount="2" value="11111111101001111110000100011111101"/>
+                        <sequence id="seq_655_EN" spec="Sequence" taxon="655_EN" totalcount="2" value="00000001001010111000000001011000101"/>
+                        <sequence id="seq_658_ENR" spec="Sequence" taxon="658_ENR" totalcount="2" value="00110001101011101000000101111000001"/>
+                        <sequence id="seq_661_R" spec="Sequence" taxon="661_R" totalcount="2" value="11111111101001111110000100011101101"/>
+                        <sequence id="seq_666_ENR" spec="Sequence" taxon="666_ENR" totalcount="2" value="00110111101000111100000000011000101"/>
+                        <sequence id="seq_674_ENR" spec="Sequence" taxon="674_ENR" totalcount="2" value="00110011101101111100000000011000001"/>
+                        <sequence id="seq_676_ENR" spec="Sequence" taxon="676_ENR" totalcount="2" value="11111111101001111110000000011100101"/>
+                        <sequence id="seq_679_ENR" spec="Sequence" taxon="679_ENR" totalcount="2" value="00110001111100111100000101011001101"/>
+                        <sequence id="seq_680_N" spec="Sequence" taxon="680_N" totalcount="2" value="00011111110000111100000000001000001"/>
+                        <sequence id="seq_681_ENR" spec="Sequence" taxon="681_ENR" totalcount="2" value="00111111101110111100000100111011001"/>
+                        <sequence id="seq_688_NR" spec="Sequence" taxon="688_NR" totalcount="2" value="01011011101101110010000100011000001"/>
+                        <sequence id="seq_690_NR" spec="Sequence" taxon="690_NR" totalcount="2" value="01011101101011110110000100001001101"/>
+                        <sequence id="seq_711_N" spec="Sequence" taxon="711_N" totalcount="2" value="10100101101001110000000100011000001"/>
+                        <sequence id="seq_714_ER" spec="Sequence" taxon="714_ER" totalcount="2" value="11101111111000111100000100111000101"/>
+                        <sequence id="seq_719_N" spec="Sequence" taxon="719_N" totalcount="2" value="00111101111000100010000000001000001"/>
+                        <sequence id="seq_727_N" spec="Sequence" taxon="727_N" totalcount="2" value="10011111111111{01}01000000100111010001"/>
+                        <sequence id="seq_738_ENR" spec="Sequence" taxon="738_ENR" totalcount="2" value="00111111101011111100000100111011001"/>
+                        <sequence id="seq_739_ENR" spec="Sequence" taxon="739_ENR" totalcount="2" value="10110111101011111100000100011010001"/>
+                        <sequence id="seq_742_E" spec="Sequence" taxon="742_E" totalcount="2" value="11011110111000000000000100101100101"/>
+                        <sequence id="seq_745_ENR" spec="Sequence" taxon="745_ENR" totalcount="2" value="10110111101010111100000100011000001"/>
+                        <sequence id="seq_749_NR" spec="Sequence" taxon="749_NR" totalcount="2" value="10010001110111111100000100001000001"/>
+                        <sequence id="seq_750_R" spec="Sequence" taxon="750_R" totalcount="2" value="10110001100111101100000100011100001"/>
+                        <sequence id="seq_750_EN" spec="Sequence" taxon="750_EN" totalcount="2" value="10110111101011101100000100011100001"/>
+                        <sequence id="seq_751_R" spec="Sequence" taxon="751_R" totalcount="2" value="11111110011001111110000110111110101"/>
+                        <sequence id="seq_752_NR" spec="Sequence" taxon="752_NR" totalcount="2" value="10001111111111111100000000111010001"/>
+                        <sequence id="seq_765_N" spec="Sequence" taxon="765_N" totalcount="2" value="10000101100001000000000000011000001"/>
+                        <sequence id="seq_769_ENR" spec="Sequence" taxon="769_ENR" totalcount="2" value="10110101111001100000000100011000001"/>
+                        <sequence id="seq_770_R" spec="Sequence" taxon="770_R" totalcount="2" value="10011101101000100000000000001000101"/>
+                        <sequence id="seq_771_ENR" spec="Sequence" taxon="771_ENR" totalcount="2" value="01010001100000111110000000111000001"/>
+                        <sequence id="seq_783_ER" spec="Sequence" taxon="783_ER" totalcount="2" value="01010001100001111110100100111001001"/>
+                        <sequence id="seq_783_N" spec="Sequence" taxon="783_N" totalcount="2" value="00110111101111111100100110011011001"/>
+                        <sequence id="seq_784_ER" spec="Sequence" taxon="784_ER" totalcount="2" value="00110101101111111100000110011011001"/>
+                        <sequence id="seq_784_N" spec="Sequence" taxon="784_N" totalcount="2" value="10111001101011111100000100011011001"/>
+                        <sequence id="seq_785_ER" spec="Sequence" taxon="785_ER" totalcount="2" value="00110001101111111100000110011011001"/>
+                        <sequence id="seq_785_N" spec="Sequence" taxon="785_N" totalcount="2" value="10111001101011111100000100011011001"/>
+                        <sequence id="seq_786_ER" spec="Sequence" taxon="786_ER" totalcount="2" value="00110001101111111100000110011011001"/>
+                        <sequence id="seq_786_N" spec="Sequence" taxon="786_N" totalcount="2" value="10111001101011111100000100011011001"/>
+                        <sequence id="seq_787_R" spec="Sequence" taxon="787_R" totalcount="2" value="00110001101111111100000110011011001"/>
+                        <sequence id="seq_787_EN" spec="Sequence" taxon="787_EN" totalcount="2" value="10111111101011111110000100011000001"/>
+                        <sequence id="seq_788_ENR" spec="Sequence" taxon="788_ENR" totalcount="2" value="00111111101011111100000100101010001"/>
+                        <sequence id="seq_802_R" spec="Sequence" taxon="802_R" totalcount="2" value="00011011110011111110000100001100001"/>
+                        <sequence id="seq_828_R" spec="Sequence" taxon="828_R" totalcount="2" value="00011001110001111110000100001101101"/>
+                        <sequence id="seq_846_E" spec="Sequence" taxon="846_E" totalcount="2" value="00111111111000100010000100001100001"/>
+                        <sequence id="seq_849_ENR" spec="Sequence" taxon="849_ENR" totalcount="2" value="11011001100000111110000100001000001"/>
+                        <sequence id="seq_851_N" spec="Sequence" taxon="851_N" totalcount="2" value="10011101111000111100000100111011101"/>
+                        <sequence id="seq_859_NR" spec="Sequence" taxon="859_NR" totalcount="2" value="10011001100000110110000100001000001"/>
+                        <sequence id="seq_870_ENR" spec="Sequence" taxon="870_ENR" totalcount="2" value="00011111111001111100000100111000001"/>
+                        <sequence id="seq_871_NR" spec="Sequence" taxon="871_NR" totalcount="2" value="00010001100001100000000000001000001"/>
+                        <sequence id="seq_888_R" spec="Sequence" taxon="888_R" totalcount="2" value="10101001101001111110000110011111101"/>
+                        <sequence id="seq_888_EN" spec="Sequence" taxon="888_EN" totalcount="2" value="10111111101011111110000110011111101"/>
+                        <sequence id="seq_893_ENR" spec="Sequence" taxon="893_ENR" totalcount="2" value="11011001110000100010000100011011001"/>
+                        <sequence id="seq_911_R" spec="Sequence" taxon="911_R" totalcount="2" value="11011001110000111110000100111011101"/>
+                        <sequence id="seq_911_EN" spec="Sequence" taxon="911_EN" totalcount="2" value="10111111101011111100000100111011101"/>
+                        <sequence id="seq_602_N" spec="Sequence" taxon="602_N" totalcount="2" value="10111001101001111110000100111001101"/>
+                        <userDataType id="StandardData.0" spec="beast.evolution.datatype.StandardData" ambiguities="01" nrOfStates="2"/>
+                    </data>
+
+
+    
+
+
+    
+
+
+    
+<map name="Uniform" >beast.math.distributions.Uniform</map>
+<map name="Exponential" >beast.math.distributions.Exponential</map>
+<map name="LogNormal" >beast.math.distributions.LogNormalDistributionModel</map>
+<map name="Normal" >beast.math.distributions.Normal</map>
+<map name="Beta" >beast.math.distributions.Beta</map>
+<map name="Gamma" >beast.math.distributions.Gamma</map>
+<map name="LaplaceDistribution" >beast.math.distributions.LaplaceDistribution</map>
+<map name="prior" >beast.math.distributions.Prior</map>
+<map name="InverseGamma" >beast.math.distributions.InverseGamma</map>
+<map name="OneOnX" >beast.math.distributions.OneOnX</map>
+
+
+<run id="mcmc" spec="MCMC" chainLength="150000000">
+    <state id="state" spec="State" storeEvery="5000">
+        <tree id="Tree.t:a_c_r4_50_50" spec="beast.evolution.tree.Tree" name="stateNode">
+            <taxonset id="TaxonSet.a_c_r4_50_502" spec="TaxonSet">
+                <alignment id="a_c_r4_50_502" spec="FilteredAlignment" ascertained="true" excludefrom="33" excludeto="35" filter="1-33,34-35">
+                    <data idref="a_c_r4_50_50"/>
+                    <userDataType id="morphDataType.a_c_r4_50_502" spec="beast.evolution.datatype.StandardData" ambiguities="01" nrOfStates="2"/>
+                </alignment>
+            </taxonset>
+        </tree>
+        <parameter id="birthRate.t:a_c_r4_50_50" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+    </state>
+
+    <init id="RandomTree.t:a_c_r4_50_50" spec="beast.evolution.tree.RandomTree" estimate="false" initial="@Tree.t:a_c_r4_50_50" taxa="@a_c_r4_50_502">
+        <populationModel id="ConstantPopulation0.t:a_c_r4_50_50" spec="ConstantPopulation">
+            <parameter id="randomPopSize.t:a_c_r4_50_50" spec="parameter.RealParameter" name="popSize">1.0</parameter>
+        </populationModel>
+    </init>
+
+    <distribution id="posterior" spec="util.CompoundDistribution">
+        <distribution id="prior" spec="util.CompoundDistribution">
+            <distribution id="YuleModel.t:a_c_r4_50_50" spec="beast.evolution.speciation.YuleModel" birthDiffRate="@birthRate.t:a_c_r4_50_50" tree="@Tree.t:a_c_r4_50_50"/>
+            <prior id="YuleBirthRatePrior.t:a_c_r4_50_50" name="distribution" x="@birthRate.t:a_c_r4_50_50">
+                <Uniform id="Uniform.1" name="distr" upper="Infinity"/>
+            </prior>
+        </distribution>
+        <distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
+            <distribution id="morphTreeLikelihood.a_c_r4_50_502" spec="TreeLikelihood" data="@a_c_r4_50_502" tree="@Tree.t:a_c_r4_50_50">
+                <siteModel id="morphSiteModel.s:a_c_r4_50_502" spec="SiteModel">
+                    <parameter id="mutationRate.s:a_c_r4_50_502" spec="parameter.RealParameter" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="gammaShape.s:a_c_r4_50_502" spec="parameter.RealParameter" estimate="false" name="shape">1.0</parameter>
+                    <substModel id="LewisMK.s:a_c_r4_50_502" spec="LewisMK" datatype="@morphDataType.a_c_r4_50_502"/>
+                </siteModel>
+                <branchRateModel id="StrictClock.c:a_c_r4_50_50" spec="beast.evolution.branchratemodel.StrictClockModel">
+                    <parameter id="clockRate.c:a_c_r4_50_50" spec="parameter.RealParameter" estimate="false" name="clock.rate">1.0</parameter>
+                </branchRateModel>
+            </distribution>
+        </distribution>
+    </distribution>
+
+    <operator id="YuleBirthRateScaler.t:a_c_r4_50_50" spec="ScaleOperator" parameter="@birthRate.t:a_c_r4_50_50" scaleFactor="0.75" weight="3.0"/>
+
+    <operator id="YuleModelTreeScaler.t:a_c_r4_50_50" spec="ScaleOperator" scaleFactor="0.5" tree="@Tree.t:a_c_r4_50_50" weight="3.0"/>
+
+    <operator id="YuleModelTreeRootScaler.t:a_c_r4_50_50" spec="ScaleOperator" rootOnly="true" scaleFactor="0.5" tree="@Tree.t:a_c_r4_50_50" weight="3.0"/>
+
+    <operator id="YuleModelUniformOperator.t:a_c_r4_50_50" spec="Uniform" tree="@Tree.t:a_c_r4_50_50" weight="30.0"/>
+
+    <operator id="YuleModelSubtreeSlide.t:a_c_r4_50_50" spec="SubtreeSlide" tree="@Tree.t:a_c_r4_50_50" weight="15.0"/>
+
+    <operator id="YuleModelNarrow.t:a_c_r4_50_50" spec="Exchange" tree="@Tree.t:a_c_r4_50_50" weight="15.0"/>
+
+    <operator id="YuleModelWide.t:a_c_r4_50_50" spec="Exchange" isNarrow="false" tree="@Tree.t:a_c_r4_50_50" weight="3.0"/>
+
+    <operator id="YuleModelWilsonBalding.t:a_c_r4_50_50" spec="WilsonBalding" tree="@Tree.t:a_c_r4_50_50" weight="3.0"/>
+
+    <logger id="tracelog" spec="Logger" fileName="beast.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+        <log id="TreeHeight.t:a_c_r4_50_50" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:a_c_r4_50_50"/>
+        <log idref="YuleModel.t:a_c_r4_50_50"/>
+        <log idref="birthRate.t:a_c_r4_50_50"/>
+        <log idref="morphTreeLikelihood.a_c_r4_50_502"/>
+    </logger>
+
+    <logger id="screenlog" spec="Logger" logEvery="1000">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+    </logger>
+
+    <logger id="treelog.t:a_c_r4_50_50" spec="Logger" fileName="$(tree).trees" logEvery="1000" mode="tree">
+        <log id="TreeWithMetaDataLogger.t:a_c_r4_50_50" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:a_c_r4_50_50"/>
+    </logger>
+
+    <operatorschedule id="OperatorSchedule" spec="OperatorSchedule"/>
+
+</run>
+
+</beast>

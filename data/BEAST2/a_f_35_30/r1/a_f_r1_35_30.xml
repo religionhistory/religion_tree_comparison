@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beast beautitemplate='Standard' beautistatus='' namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" required="" version="2.6">
+
+
+    <data
+id="a_f_r1_35_30"
+spec="Alignment"
+dataType="standard">
+                        <sequence id="seq_196_EN" spec="Sequence" taxon="196_EN" totalcount="2" value="10111001"/>
+                        <sequence id="seq_383_N" spec="Sequence" taxon="383_N" totalcount="2" value="11011101"/>
+                        <sequence id="seq_400_N" spec="Sequence" taxon="400_N" totalcount="2" value="11111001"/>
+                        <sequence id="seq_415_R" spec="Sequence" taxon="415_R" totalcount="2" value="11101101"/>
+                        <sequence id="seq_419_ENR" spec="Sequence" taxon="419_ENR" totalcount="2" value="11101001"/>
+                        <sequence id="seq_424_ER" spec="Sequence" taxon="424_ER" totalcount="2" value="11111101"/>
+                        <sequence id="seq_442_ENR" spec="Sequence" taxon="442_ENR" totalcount="2" value="11111001"/>
+                        <sequence id="seq_476_ENR" spec="Sequence" taxon="476_ENR" totalcount="2" value="11111101"/>
+                        <sequence id="seq_483_N" spec="Sequence" taxon="483_N" totalcount="2" value="11111001"/>
+                        <sequence id="seq_484_N" spec="Sequence" taxon="484_N" totalcount="2" value="10111001"/>
+                        <sequence id="seq_490_N" spec="Sequence" taxon="490_N" totalcount="2" value="10110001"/>
+                        <sequence id="seq_492_ER" spec="Sequence" taxon="492_ER" totalcount="2" value="00111001"/>
+                        <sequence id="seq_520_ENR" spec="Sequence" taxon="520_ENR" totalcount="2" value="11111101"/>
+                        <sequence id="seq_526_N" spec="Sequence" taxon="526_N" totalcount="2" value="11011101"/>
+                        <sequence id="seq_562_E" spec="Sequence" taxon="562_E" totalcount="2" value="10111101"/>
+                        <sequence id="seq_564_N" spec="Sequence" taxon="564_N" totalcount="2" value="11011001"/>
+                        <sequence id="seq_592_N" spec="Sequence" taxon="592_N" totalcount="2" value="11111001"/>
+                        <sequence id="seq_624_NR" spec="Sequence" taxon="624_NR" totalcount="2" value="10111101"/>
+                        <sequence id="seq_629_NR" spec="Sequence" taxon="629_NR" totalcount="2" value="11101001"/>
+                        <sequence id="seq_633_ER" spec="Sequence" taxon="633_ER" totalcount="2" value="10111001"/>
+                        <sequence id="seq_661_R" spec="Sequence" taxon="661_R" totalcount="2" value="11111101"/>
+                        <sequence id="seq_676_ENR" spec="Sequence" taxon="676_ENR" totalcount="2" value="11111101"/>
+                        <sequence id="seq_688_NR" spec="Sequence" taxon="688_NR" totalcount="2" value="10111101"/>
+                        <sequence id="seq_690_NR" spec="Sequence" taxon="690_NR" totalcount="2" value="11111001"/>
+                        <sequence id="seq_714_ER" spec="Sequence" taxon="714_ER" totalcount="2" value="11111101"/>
+                        <sequence id="seq_719_N" spec="Sequence" taxon="719_N" totalcount="2" value="11110001"/>
+                        <sequence id="seq_738_ENR" spec="Sequence" taxon="738_ENR" totalcount="2" value="11111101"/>
+                        <sequence id="seq_749_NR" spec="Sequence" taxon="749_NR" totalcount="2" value="00001001"/>
+                        <sequence id="seq_849_ENR" spec="Sequence" taxon="849_ENR" totalcount="2" value="10011001"/>
+                        <userDataType id="StandardData.0" spec="beast.evolution.datatype.StandardData" ambiguities="" nrOfStates="2"/>
+                    </data>
+
+
+    
+
+
+    
+
+
+    
+<map name="Uniform" >beast.math.distributions.Uniform</map>
+<map name="Exponential" >beast.math.distributions.Exponential</map>
+<map name="LogNormal" >beast.math.distributions.LogNormalDistributionModel</map>
+<map name="Normal" >beast.math.distributions.Normal</map>
+<map name="Beta" >beast.math.distributions.Beta</map>
+<map name="Gamma" >beast.math.distributions.Gamma</map>
+<map name="LaplaceDistribution" >beast.math.distributions.LaplaceDistribution</map>
+<map name="prior" >beast.math.distributions.Prior</map>
+<map name="InverseGamma" >beast.math.distributions.InverseGamma</map>
+<map name="OneOnX" >beast.math.distributions.OneOnX</map>
+
+
+<run id="mcmc" spec="MCMC" chainLength="150000000">
+    <state id="state" spec="State" storeEvery="5000">
+        <tree id="Tree.t:a_f_r1_35_30" spec="beast.evolution.tree.Tree" name="stateNode">
+            <taxonset id="TaxonSet.a_f_r1_35_302" spec="TaxonSet">
+                <alignment id="a_f_r1_35_302" spec="FilteredAlignment" ascertained="true" excludefrom="6" excludeto="8" filter="1-6,7-8">
+                    <data idref="a_f_r1_35_30"/>
+                    <userDataType id="morphDataType.a_f_r1_35_302" spec="beast.evolution.datatype.StandardData" ambiguities="" nrOfStates="2"/>
+                </alignment>
+            </taxonset>
+        </tree>
+        <parameter id="birthRate.t:a_f_r1_35_30" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+    </state>
+
+    <init id="RandomTree.t:a_f_r1_35_30" spec="beast.evolution.tree.RandomTree" estimate="false" initial="@Tree.t:a_f_r1_35_30" taxa="@a_f_r1_35_302">
+        <populationModel id="ConstantPopulation0.t:a_f_r1_35_30" spec="ConstantPopulation">
+            <parameter id="randomPopSize.t:a_f_r1_35_30" spec="parameter.RealParameter" name="popSize">1.0</parameter>
+        </populationModel>
+    </init>
+
+    <distribution id="posterior" spec="util.CompoundDistribution">
+        <distribution id="prior" spec="util.CompoundDistribution">
+            <distribution id="YuleModel.t:a_f_r1_35_30" spec="beast.evolution.speciation.YuleModel" birthDiffRate="@birthRate.t:a_f_r1_35_30" tree="@Tree.t:a_f_r1_35_30"/>
+            <prior id="YuleBirthRatePrior.t:a_f_r1_35_30" name="distribution" x="@birthRate.t:a_f_r1_35_30">
+                <Uniform id="Uniform.1" name="distr" upper="Infinity"/>
+            </prior>
+        </distribution>
+        <distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
+            <distribution id="morphTreeLikelihood.a_f_r1_35_302" spec="TreeLikelihood" data="@a_f_r1_35_302" tree="@Tree.t:a_f_r1_35_30">
+                <siteModel id="morphSiteModel.s:a_f_r1_35_302" spec="SiteModel">
+                    <parameter id="mutationRate.s:a_f_r1_35_302" spec="parameter.RealParameter" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="gammaShape.s:a_f_r1_35_302" spec="parameter.RealParameter" estimate="false" name="shape">1.0</parameter>
+                    <substModel id="LewisMK.s:a_f_r1_35_302" spec="LewisMK" datatype="@morphDataType.a_f_r1_35_302"/>
+                </siteModel>
+                <branchRateModel id="StrictClock.c:a_f_r1_35_30" spec="beast.evolution.branchratemodel.StrictClockModel">
+                    <parameter id="clockRate.c:a_f_r1_35_30" spec="parameter.RealParameter" estimate="false" name="clock.rate">1.0</parameter>
+                </branchRateModel>
+            </distribution>
+        </distribution>
+    </distribution>
+
+    <operator id="YuleBirthRateScaler.t:a_f_r1_35_30" spec="ScaleOperator" parameter="@birthRate.t:a_f_r1_35_30" scaleFactor="0.75" weight="3.0"/>
+
+    <operator id="YuleModelTreeScaler.t:a_f_r1_35_30" spec="ScaleOperator" scaleFactor="0.5" tree="@Tree.t:a_f_r1_35_30" weight="3.0"/>
+
+    <operator id="YuleModelTreeRootScaler.t:a_f_r1_35_30" spec="ScaleOperator" rootOnly="true" scaleFactor="0.5" tree="@Tree.t:a_f_r1_35_30" weight="3.0"/>
+
+    <operator id="YuleModelUniformOperator.t:a_f_r1_35_30" spec="Uniform" tree="@Tree.t:a_f_r1_35_30" weight="30.0"/>
+
+    <operator id="YuleModelSubtreeSlide.t:a_f_r1_35_30" spec="SubtreeSlide" tree="@Tree.t:a_f_r1_35_30" weight="15.0"/>
+
+    <operator id="YuleModelNarrow.t:a_f_r1_35_30" spec="Exchange" tree="@Tree.t:a_f_r1_35_30" weight="15.0"/>
+
+    <operator id="YuleModelWide.t:a_f_r1_35_30" spec="Exchange" isNarrow="false" tree="@Tree.t:a_f_r1_35_30" weight="3.0"/>
+
+    <operator id="YuleModelWilsonBalding.t:a_f_r1_35_30" spec="WilsonBalding" tree="@Tree.t:a_f_r1_35_30" weight="3.0"/>
+
+    <logger id="tracelog" spec="Logger" fileName="beast.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+        <log id="TreeHeight.t:a_f_r1_35_30" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:a_f_r1_35_30"/>
+        <log idref="YuleModel.t:a_f_r1_35_30"/>
+        <log idref="birthRate.t:a_f_r1_35_30"/>
+        <log idref="morphTreeLikelihood.a_f_r1_35_302"/>
+    </logger>
+
+    <logger id="screenlog" spec="Logger" logEvery="1000">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+    </logger>
+
+    <logger id="treelog.t:a_f_r1_35_30" spec="Logger" fileName="$(tree).trees" logEvery="1000" mode="tree">
+        <log id="TreeWithMetaDataLogger.t:a_f_r1_35_30" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:a_f_r1_35_30"/>
+    </logger>
+
+    <operatorschedule id="OperatorSchedule" spec="OperatorSchedule"/>
+
+</run>
+
+</beast>
