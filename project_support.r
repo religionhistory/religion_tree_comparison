@@ -1,5 +1,5 @@
 # Check if packages are installed and if they are not installed, install them
-packages <- c("tidyverse", "data.table", "ape", "igraph", "adephylo", "h2o", "rlist", "ggpubr")
+packages <- c("devtools","tidyverse", "data.table", "ape", "igraph", "adephylo", "h2o", "rlist", "ggpubr")
 cran_packages <- setdiff(packages, rownames(installed.packages()))
 if( length(cran_packages) ) {
   if( length(grep("devtools", cran_packages))) {
